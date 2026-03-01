@@ -1,14 +1,31 @@
+import { phone, phoneHref } from '../data/contacts'
+import { maxLink, maxLabel } from '../data/contacts'
+
+const LOGO = 'Seel & Wood'
+
 export function Footer() {
   return (
     <footer
-      className="border-t border-neutral-200 bg-neutral-50 px-4 py-8"
+      className="border-t border-neutral-200 bg-neutral-50 px-4 py-10"
       role="contentinfo"
     >
-      <div className="mx-auto max-w-6xl text-center text-sm text-neutral-600">
-        <p>Steel & Wood</p>
-        <p className="mt-1">
-          <a href="tel:+79377575153" className="hover:text-neutral-900">+7 (937) 757-51-53</a>
-        </p>
+      <div className="mx-auto max-w-6xl">
+        <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:justify-between sm:text-left">
+          <p className="text-lg font-medium text-neutral-800">{LOGO}</p>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-neutral-600">
+            <a href={phoneHref} className="hover:text-neutral-900">
+              {phone}
+            </a>
+            <a
+              href={maxLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-neutral-900"
+            >
+              {maxLabel}
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   )

@@ -3,7 +3,10 @@ import { useGLTF } from '@react-three/drei'
 import { Header } from './components/header/Header'
 import { Hero } from './components/hero/Hero'
 import { Footer } from './components/Footer'
-import { SectionPlaceholder } from './components/sections/SectionPlaceholder'
+import { SectionCategories } from './components/sections/SectionCategories'
+import { SectionAdvantages } from './components/sections/SectionAdvantages'
+import { SectionCTA } from './components/sections/SectionCTA'
+import { SectionRoadmap } from './components/sections/SectionRoadmap'
 
 function App() {
   useEffect(() => {
@@ -14,21 +17,10 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <SectionPlaceholder
-          id="categories"
-          title="Категории"
-          description="Блок категорий мебели — заглушка"
-        />
-        <SectionPlaceholder
-          id="about"
-          title="О компании"
-          description="Преимущества и информация — заглушка"
-        />
-        <SectionPlaceholder
-          id="cta"
-          title="Связаться"
-          description="Призыв к действию — заглушка"
-        />
+        <SectionCategories />
+        <SectionAdvantages />
+        <SectionCTA />
+        <SectionRoadmap />
       </main>
       <Footer />
     </>
