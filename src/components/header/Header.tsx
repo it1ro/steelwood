@@ -5,7 +5,7 @@ export function Header() {
       role="banner"
     >
       <div className="flex items-center gap-4">
-        <span className="font-semibold text-neutral-800">Seel & Wood</span>
+        <span className="font-semibold text-neutral-800">Steel & Wood</span>
       </div>
       <nav className="hidden md:flex items-center gap-6" aria-label="Основное меню">
         <span className="text-sm text-neutral-600">Каталог</span>
