@@ -8,9 +8,11 @@ export function SectionCTA() {
     <section
       id="cta"
       className="border-t border-neutral-200 bg-white px-4 py-20"
+      aria-labelledby="cta-heading"
     >
       <div className="mx-auto max-w-3xl text-center">
         <motion.h2
+          id="cta-heading"
           className="text-3xl font-semibold text-neutral-800 md:text-4xl"
           initial={revealInitial}
           whileInView={revealVisible()}

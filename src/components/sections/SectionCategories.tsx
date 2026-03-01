@@ -7,9 +7,11 @@ export function SectionCategories() {
     <section
       id="categories"
       className="border-t border-neutral-200 bg-white px-4 py-20"
+      aria-labelledby="categories-heading"
     >
       <div className="mx-auto max-w-6xl">
         <motion.h2
+          id="categories-heading"
           className="text-center text-3xl font-semibold text-neutral-800 md:text-4xl"
           initial={revealInitial}
           whileInView={revealVisible()}

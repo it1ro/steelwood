@@ -13,9 +13,11 @@ export function SectionRoadmap() {
     <section
       id="order-steps"
       className="border-t border-neutral-200 bg-neutral-50 px-4 py-20"
+      aria-labelledby="order-steps-heading"
     >
       <div className="mx-auto max-w-4xl">
         <motion.h2
+          id="order-steps-heading"
           className="text-center text-3xl font-semibold text-neutral-800 md:text-4xl"
           initial={revealInitial}
           whileInView={revealVisible()}

@@ -21,9 +21,11 @@ export function SectionAdvantages() {
     <section
       id="about"
       className="border-t border-neutral-200 bg-neutral-50 px-4 py-20"
+      aria-labelledby="about-heading"
     >
       <div className="mx-auto max-w-6xl">
         <motion.h2
+          id="about-heading"
           className="text-center text-3xl font-semibold text-neutral-800 md:text-4xl"
           initial={revealInitial}
           whileInView={revealVisible()}
