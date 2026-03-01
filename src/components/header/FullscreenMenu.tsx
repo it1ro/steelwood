@@ -52,6 +52,44 @@ export function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {
     focusable?.focus()
   }, [isOpen])
 
+  // Focus trap: Tab/Shift+Tab циклически внутри меню
+  useEffect(() => {
+    if (!isOpen || !containerRef.current) return
+    const container = containerRef.current
+    const getFocusables = (): HTMLElement[] =>
+      Array.from(
+        container.querySelectorAll<HTMLElement>('a[href], button')
+      ).filter(
+        (el) =>
+          el.tabIndex !== -1 &&
+          !el.hasAttribute('disabled') &&
+          el.getAttribute('aria-hidden') !== 'true'
+      )
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return
+      const list = getFocusables()
+      if (list.length === 0) return
+      const current = document.activeElement as HTMLElement | null
+      if (!current || !container.contains(current)) return
+      const idx = list.indexOf(current)
+      if (idx === -1) return
+      if (e.shiftKey) {
+        if (idx === 0) {
+          e.preventDefault()
+          list[list.length - 1].focus()
+        }
+      } else {
+        if (idx === list.length - 1) {
+          e.preventDefault()
+          list[0].focus()
+        }
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown, true)
+    return () => document.removeEventListener('keydown', handleKeyDown, true)
+  }, [isOpen])
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -77,8 +115,15 @@ export function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Карта сайта */}
-            <motion.section variants={blockVariants} className="mb-10">
-              <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+            <motion.section
+              variants={blockVariants}
+              className="mb-10"
+              aria-labelledby="fullscreen-menu-sitemap-heading"
+            >
+              <h2
+                id="fullscreen-menu-sitemap-heading"
+                className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-400"
+              >
                 Карта сайта
               </h2>
               <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Карта сайта">
@@ -96,8 +141,15 @@ export function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {
             </motion.section>
 
             {/* Каталог: категории и подкатегории */}
-            <motion.section variants={blockVariants} className="mb-10">
-              <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+            <motion.section
+              variants={blockVariants}
+              className="mb-10"
+              aria-labelledby="fullscreen-menu-catalog-heading"
+            >
+              <h2
+                id="fullscreen-menu-catalog-heading"
+                className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-400"
+              >
                 Каталог
               </h2>
               <ul className="space-y-6">
@@ -125,8 +177,14 @@ export function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {
             </motion.section>
 
             {/* Контакты */}
-            <motion.section variants={blockVariants}>
-              <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+            <motion.section
+              variants={blockVariants}
+              aria-labelledby="fullscreen-menu-contacts-heading"
+            >
+              <h2
+                id="fullscreen-menu-contacts-heading"
+                className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-400"
+              >
                 Контакты
               </h2>
               <div className="flex flex-wrap gap-x-6 gap-y-2">
