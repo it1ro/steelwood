@@ -37,9 +37,6 @@ Thumbs.db
 coverage/
 .nyc_output/
 
-# Large 3D models (добавьте wardrobe.glb вручную при необходимости)
-public/models/*.glb
-
 # Misc
 .cache/
 .temp/
