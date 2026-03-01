@@ -41,31 +41,46 @@ export function SectionWardrobe3D() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen w-full bg-neutral-50"
+      className="relative flex min-h-screen w-full flex-col bg-neutral-50"
       style={{ minHeight: '100vh' }}
       aria-label="3D-модель шкафа"
     >
-      <Canvas
-        className="h-full w-full"
-        gl={{
-          alpha: false,
-          antialias: true,
-          powerPreference: 'high-performance',
-        }}
-        dpr={[1, 2]}
-        shadows
-        onCreated={({ scene }) => {
-          scene.background = new THREE.Color(SCENE_BACKGROUND)
-        }}
-        camera={{
-          position: [0, 0, 4],
-          fov: 45,
-          near: 0.1,
-          far: 1000,
-        }}
-      >
-        <WardrobeShowcaseScene />
-      </Canvas>
+      <div className="shrink-0 px-4 pt-6 text-center sm:pt-8">
+        <h2 className="text-2xl font-semibold text-neutral-800 sm:text-3xl md:text-4xl">
+          Рассмотрите в деталях
+        </h2>
+      </div>
+      <div className="relative h-[calc(100vh-14rem)] shrink-0">
+        <Canvas
+          className="h-full w-full"
+          gl={{
+            alpha: false,
+            antialias: true,
+            powerPreference: 'high-performance',
+          }}
+          dpr={[1, 2]}
+          shadows
+          onCreated={({ scene }) => {
+            scene.background = new THREE.Color(SCENE_BACKGROUND)
+          }}
+          camera={{
+            position: [0, 0, 4],
+            fov: 45,
+            near: 0.1,
+            far: 1000,
+          }}
+        >
+          <WardrobeShowcaseScene />
+        </Canvas>
+      </div>
+      <div className="shrink-0 py-6 text-center sm:py-8">
+        <a
+          href="#categories"
+          className="inline-flex items-center rounded-lg bg-amber-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+        >
+          В каталог
+        </a>
+      </div>
     </section>
   )
 }
