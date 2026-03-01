@@ -4,7 +4,7 @@ import { CatalogDropdown } from './CatalogDropdown'
 import { phone, phoneHref } from '../../data/contacts'
 import { maxLink, maxLabel } from '../../data/contacts'
 
-const LOGO = 'Seel & Wood'
+const LOGO = 'Steel & Wood'
 
 function HamburgerIcon({ open }: { open: boolean }) {
   return (
