@@ -1,9 +1,14 @@
+import { useEffect } from 'react'
+import { useGLTF } from '@react-three/drei'
 import { Header } from './components/header/Header'
 import { Hero } from './components/hero/Hero'
 import { Footer } from './components/Footer'
 import { SectionPlaceholder } from './components/sections/SectionPlaceholder'
 
 function App() {
+  useEffect(() => {
+    useGLTF.preload('/models/wardrobe.glb')
+  }, [])
   return (
     <>
       <Header />

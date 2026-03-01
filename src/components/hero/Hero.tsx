@@ -1,13 +1,34 @@
+import { Canvas } from '@react-three/fiber'
+import { HeroScene } from './HeroScene'
+
+const CAMERA_POSITION: [number, number, number] = [5, 1.4, 5]
+const CAMERA_FOV = 45
+
 export function Hero() {
   return (
     <section
-      className="relative flex min-h-screen w-full items-center justify-center bg-neutral-100"
-      aria-label="Главный экран"
+      className="relative h-screen w-full"
+      style={{ minHeight: '100vh' }}
+      aria-label="Главный экран — 3D угловой шкаф"
     >
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-neutral-800 md:text-4xl">Steel & Wood</h1>
-        <p className="mt-2 text-neutral-600">Hero — 3D-сцена будет здесь</p>
-      </div>
+      <Canvas
+        className="h-full w-full"
+        camera={{
+          position: CAMERA_POSITION,
+          fov: CAMERA_FOV,
+          near: 0.1,
+          far: 1000,
+        }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: 'high-performance',
+        }}
+        dpr={[1, 2]}
+        shadows
+      >
+        <HeroScene />
+      </Canvas>
     </section>
   )
 }
