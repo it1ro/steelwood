@@ -48,10 +48,11 @@ function getPhoneDigits(value: string): string {
   return value.replace(/\D/g, '')
 }
 
-/** Форматирование телефона: +7 (XXX) XXX-XX-XX (макс. 10 цифр после 7) */
+/** Форматирование телефона: +7 (XXX) XXX-XX-XX (макс. 10 цифр после 7). Пустое поле при фокусе показываем как «+7 ». */
 function formatPhoneDisplay(digits: string): string {
   const d = digits.slice(0, 11)
   if (d.length === 0) return ''
+  if (d === '7' || d === '8') return '+7 '
   const rest = d.startsWith('7') || d.startsWith('8') ? d.slice(1) : d
   const ten = rest.slice(0, 10)
   const a = ten.slice(0, 3)
@@ -93,6 +94,8 @@ async function submitCallbackRequest(payload: {
 
 type FormErrors = { name?: string; phone?: string }
 
+const PHONE_ERROR_MESSAGE = 'Введите номер в формате +7 (9XX) XXX-XX-XX'
+
 export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const [submitted, setSubmitted] = useState(false)
@@ -102,6 +105,7 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [commentExpanded, setCommentExpanded] = useState(false)
 
   const handleClose = useCallback(() => {
     onClose()
@@ -130,6 +134,7 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
       setErrors({})
       setIsSubmitting(false)
       setSubmitError(null)
+      setCommentExpanded(false)
     }
   }, [isOpen])
 
@@ -205,13 +210,48 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
     }
   }, [name, phoneDigits, comment])
 
+  const validateName = useCallback((value: string) => {
+    if (!value.trim()) return 'Введите имя'
+    return undefined
+  }, [])
+  const validatePhone = useCallback((digits: string) => {
+    if (!validatePhoneDigits(digits)) return PHONE_ERROR_MESSAGE
+    return undefined
+  }, [])
+
+  const handleNameBlur = useCallback(() => {
+    const msg = validateName(name)
+    if (msg) setErrors((prev) => ({ ...prev, name: msg }))
+    else setErrors((prev) => (prev.name ? { ...prev, name: undefined } : prev))
+  }, [name, validateName])
+
+  const handlePhoneBlur = useCallback(() => {
+    const msg = validatePhone(phoneDigits)
+    if (msg) setErrors((prev) => ({ ...prev, phone: msg }))
+    else setErrors((prev) => (prev.phone ? { ...prev, phone: undefined } : prev))
+  }, [phoneDigits, validatePhone])
+
+  const handlePhoneFocus = useCallback(() => {
+    if (phoneDigits === '') setPhoneDigits('7')
+  }, [phoneDigits])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const nextErrors: FormErrors = {}
-    if (!name.trim()) nextErrors.name = 'Введите имя'
-    if (!validatePhoneDigits(phoneDigits)) nextErrors.phone = 'Введите корректный номер телефона'
+    const nameErr = validateName(name)
+    const phoneErr = validatePhone(phoneDigits)
+    if (nameErr) nextErrors.name = nameErr
+    if (phoneErr) nextErrors.phone = phoneErr
     setErrors(nextErrors)
-    if (Object.keys(nextErrors).length > 0) return
+    if (Object.keys(nextErrors).length > 0) {
+      const firstErrorId = nextErrors.name ? 'callback-name' : 'callback-phone'
+      setTimeout(() => {
+        const el = document.getElementById(firstErrorId)
+        el?.focus()
+        el?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      }, 0)
+      return
+    }
     void sendRequest()
   }
 
@@ -237,7 +277,7 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
           onClick={handleOverlayClick}
           role="dialog"
           aria-modal="true"
-          aria-labelledby="callback-modal-title"
+          aria-labelledby={submitted ? 'callback-modal-title-success' : 'callback-modal-title'}
           aria-describedby={dialogDescId}
         >
           <motion.div
@@ -249,34 +289,36 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-md rounded-2xl bg-white shadow-xl"
           >
-            <div className="relative flex items-center justify-center border-b border-neutral-200 px-5 py-4 sm:px-6">
-              <h2
-                id="callback-modal-title"
-                className="text-lg font-semibold text-neutral-900"
-              >
-                Заказать звонок
-              </h2>
-              <button
-                type="button"
-                onClick={handleClose}
-                className="absolute right-5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 sm:right-6"
-                aria-label="Закрыть"
-              >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+            {!submitted && (
+              <div className="relative flex items-center justify-center border-b border-neutral-200 px-5 py-4 sm:px-6">
+                <h2
+                  id="callback-modal-title"
+                  className="text-lg font-semibold text-neutral-900"
+                >
+                  Заказать звонок
+                </h2>
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="absolute right-5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 sm:right-6"
+                  aria-label="Закрыть"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            )}
 
             <div className="px-5 py-5 sm:px-6 sm:py-6">
               {submitted ? (
-                <div id="callback-modal-desc-success" className="py-4 text-center">
+                <div id="callback-modal-desc-success" className="py-4 text-center" aria-live="polite">
                   <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600">
                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <p className="text-neutral-700 font-medium">Заявка принята</p>
+                  <p id="callback-modal-title-success" className="text-neutral-700 font-medium">Заявка принята</p>
                   <p className="mt-1 text-sm text-neutral-500">
                     Мы перезвоним вам в ближайшее время.
                   </p>
@@ -294,11 +336,12 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
                     Оставьте контакты — мы перезвоним в удобное время.
                   </p>
                   {submitError && (
-                    <div
-                      id="callback-modal-desc-error"
-                      className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
-                      role="alert"
-                    >
+                    <div className="mb-4" aria-live="polite">
+                      <div
+                        id="callback-modal-desc-error"
+                        className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
+                        role="alert"
+                      >
                       <p className="font-medium">Ошибка отправки</p>
                       <p className="mt-0.5">{submitError}</p>
                       <button
@@ -309,6 +352,7 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
                       >
                         Повторить
                       </button>
+                    </div>
                     </div>
                   )}
                   <form onSubmit={handleSubmit} className="space-y-4">
@@ -324,6 +368,7 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
                           setName(e.target.value)
                           if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }))
                         }}
+                        onBlur={handleNameBlur}
                         required
                         placeholder="Как к вам обращаться"
                         className={`w-full rounded-lg border bg-white px-3 py-2.5 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 ${
@@ -350,6 +395,8 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
                         type="tel"
                         value={phoneDisplay}
                         onChange={handlePhoneChange}
+                        onFocus={handlePhoneFocus}
+                        onBlur={handlePhoneBlur}
                         required
                         placeholder="+7 (___) ___-__-__"
                         className={`w-full rounded-lg border bg-white px-3 py-2.5 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 ${
@@ -368,22 +415,35 @@ export function CallbackModal({ isOpen, onClose, triggerRef }: CallbackModalProp
                       )}
                     </div>
                     <div>
-                      <label htmlFor="callback-comment" className="mb-1 block text-sm font-medium text-neutral-700">
-                        Комментарий
-                      </label>
-                      <textarea
-                        id="callback-comment"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        rows={3}
-                        placeholder="О чём хотите спросить (необязательно)"
-                        className="w-full resize-none rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
-                      />
+                      {commentExpanded ? (
+                        <>
+                          <label htmlFor="callback-comment" className="mb-1 block text-sm font-medium text-neutral-700">
+                            Комментарий
+                          </label>
+                          <textarea
+                            id="callback-comment"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            rows={3}
+                            placeholder="О чём хотите спросить (необязательно)"
+                            className="w-full resize-none rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-neutral-900 placeholder-neutral-400 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+                          />
+                        </>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setCommentExpanded(true)}
+                          className="text-sm font-medium text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 rounded px-0 py-1 -ml-px"
+                        >
+                          Добавить комментарий
+                        </button>
+                      )}
                     </div>
                     <div className="flex gap-3 pt-1">
                       <button
                         type="submit"
                         disabled={!isFormValid || isSubmitting}
+                        title={!isFormValid && !isSubmitting ? 'Заполните имя и телефон' : undefined}
                         className="flex-1 rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {isSubmitting ? 'Отправка…' : 'Жду звонка'}
