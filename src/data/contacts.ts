@@ -5,6 +5,6 @@
 export const phone = '+7 (937) 757-51-53'
 export const phoneHref = 'tel:+79377575153'
 
-/** Ссылка на мессенджер (Max / Тинькофф и т.п.). Заменить на реальный URL при публикации. */
-export const maxLink = 'https://t.me/example'
-export const maxLabel = 'Написать в Max'
+/** Ссылка на Upgoods в мессенджере Max. */
+export const maxLink = 'https://web.max.ru/upgoods'
+export const maxLabel = 'Перейти в Max (Upgoods)'

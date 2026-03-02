@@ -44,6 +44,21 @@ function CartIcon() {
   )
 }
 
+const MAX_LOGO_URL = 'https://max.ru/s/img/big-logo.png'
+
+function MaxIcon() {
+  return (
+    <img
+      src={MAX_LOGO_URL}
+      alt=""
+      className="h-5 w-5 object-contain"
+      width={20}
+      height={20}
+      loading="lazy"
+    />
+  )
+}
+
 const noop = () => {}
 
 export function Header() {
@@ -178,14 +193,15 @@ export function Header() {
           >
             {phone}
           </a>
-          {/* Ссылка Max */}
+          {/* Нативное лого Max — переход в Upgoods */}
           <a
             href={maxLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline text-sm text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 rounded px-1"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2"
+            aria-label={maxLabel}
           >
-            {maxLabel}
+            <MaxIcon />
           </a>
           {/* Кнопка заказа звонка */}
           <a
