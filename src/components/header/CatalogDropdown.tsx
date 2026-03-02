@@ -37,7 +37,7 @@ export function CatalogDropdown({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       role="menu"
-      aria-label="Каталог категорий"
+      aria-label="Категории мебели"
     >
       <motion.div
         initial={{ opacity: 0, y: -8 }}

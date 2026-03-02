@@ -16,7 +16,7 @@ export interface Category {
 export const categories: Category[] = [
   {
     id: 'kindergartens',
-    title: 'Мебель для детских садов',
+    title: 'Детские сады',
     subcategories: [
       { id: 'kd-shkafy', title: 'Шкафы и стеллажи' },
       { id: 'kd-stoly', title: 'Столы и стулья' },
@@ -42,21 +42,21 @@ export const categories: Category[] = [
     ],
   },
   {
-    id: 'dormitories',
-    title: 'Для общежитий и лагерей',
-    subcategories: [
-      { id: 'ob-krovati', title: 'Кровати двухъярусные' },
-      { id: 'ob-shkafy', title: 'Шкафы и тумбы' },
-      { id: 'ob-obshchaya', title: 'Мебель для общих зон' },
-    ],
-  },
-  {
     id: 'home',
     title: 'Для дома',
     subcategories: [
       { id: 'hm-garderob', title: 'Гардеробные и шкафы' },
       { id: 'hm-gostinaya', title: 'Гостиная' },
       { id: 'hm-spalnya', title: 'Спальня и детская' },
+    ],
+  },
+  {
+    id: 'dormitories',
+    title: 'Общежитие и лагерь',
+    subcategories: [
+      { id: 'ob-krovati', title: 'Кровати двухъярусные' },
+      { id: 'ob-shkafy', title: 'Шкафы и тумбы' },
+      { id: 'ob-obshchaya', title: 'Общие зоны' },
     ],
   },
 ]

@@ -130,7 +130,7 @@ export function Header() {
             {LOGO}
           </a>
 
-          {/* Каталог — мобильные: кнопка по клику, выпадашка с isTouch */}
+          {/* Категории мебели — мобильные: кнопка по клику, выпадашка с isTouch */}
           <div ref={mobileCatalogRef} className="relative md:hidden">
             <button
               type="button"
@@ -138,9 +138,9 @@ export function Header() {
               onClick={() => setCatalogOpen((o) => !o)}
               aria-expanded={catalogOpen}
               aria-haspopup="menu"
-              aria-label="Каталог"
+              aria-label="Категории мебели"
             >
-              Каталог
+              Категории мебели
               <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
@@ -154,7 +154,7 @@ export function Header() {
             />
           </div>
 
-          {/* Каталог с выпадающим меню — десктоп (hover) */}
+          {/* Категории мебели с выпадающим меню — десктоп (hover) */}
           <div
             className="relative hidden md:block"
             onMouseEnter={handleCatalogMouseEnter}
@@ -165,9 +165,9 @@ export function Header() {
               className="flex items-center gap-1 rounded px-2 py-1.5 text-sm text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2"
               aria-expanded={catalogOpen}
               aria-haspopup="menu"
-              aria-label="Каталог"
+              aria-label="Категории мебели"
             >
-              Каталог
+              Категории мебели
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>

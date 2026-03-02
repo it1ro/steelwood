@@ -204,7 +204,7 @@ export function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {
                   id="fullscreen-menu-catalog-heading"
                   className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-600 sm:mb-5 sm:text-sm md:mb-6"
                 >
-                  Каталог
+                  Категории мебели
                 </h2>
                 <ul className="space-y-6 sm:space-y-8 md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-8 md:space-y-0 xl:grid-cols-3 xl:gap-x-12">
                   {categories.map((cat) => (
