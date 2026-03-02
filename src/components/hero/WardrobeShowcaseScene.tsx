@@ -15,6 +15,8 @@ const ROTATION_SMOOTH = 0.07
 /** Дистанция камеры: ближе = наезд, дальше = отъезд (увеличен разброс для заметности). */
 const CAMERA_Z_NEAR = 6
 const CAMERA_Z_FAR = 16
+/** Высота камеры над уровнем пола (пол и объекты на y = -3). */
+const CAMERA_Y_OFFSET = 1.5
 /** Плавный переход 0→1 на [a,b] (smoothstep). */
 function smoothstep(a: number, b: number, x: number): number {
   const t = Math.max(0, Math.min(1, (x - a) / (b - a)))
@@ -148,7 +150,7 @@ export function WardrobeShowcaseScene() {
     currentZ.current += (targetZ - currentZ.current) * t
     camera.position.set(
       panOffsetX.current,
-      panOffsetY.current,
+      CAMERA_Y_OFFSET + panOffsetY.current,
       currentZ.current
     )
   })
@@ -160,11 +162,27 @@ export function WardrobeShowcaseScene() {
         intensity={1.2}
         castShadow
         shadow-mapSize={[2048, 2048]}
+        shadow-camera-left={-8}
+        shadow-camera-right={8}
+        shadow-camera-top={8}
+        shadow-camera-bottom={-8}
+        shadow-camera-near={0.5}
+        shadow-camera-far={20}
+        shadow-bias={-0.0001}
       />
       <ambientLight intensity={0.4} />
       <Environment preset="studio" />
       <Center>
-        <group ref={groupRef} position={[0, -1.5, -2]}>
+        {/* Плоскость под шкафом — на неё падает тень (цвет фона neutral-50) */}
+        <mesh
+          rotation={[-Math.PI / 2, 0, 0]}
+          position={[0, -2.85, -2]}
+          receiveShadow
+        >
+          <planeGeometry args={[20, 20]} />
+          <meshStandardMaterial color="#fafafa" />
+        </mesh>
+        <group ref={groupRef} position={[0, -2.85, -2]}>
           <ModelErrorBoundary>
             <Suspense fallback={null}>
               <WardrobeModel />
