@@ -53,7 +53,7 @@ export function SectionWardrobe3D() {
           Рассмотрите в деталях
         </h2>
       </div>
-      <div className="relative h-[calc(100vh-14rem)] shrink-0">
+      <div className="relative h-[calc(85vh-11.9rem)] shrink-0">
         <Canvas
           className="h-full w-full"
           gl={{
