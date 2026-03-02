@@ -29,7 +29,7 @@ const overlayVariants = {
     visibility: 'hidden' as const,
     pointerEvents: 'none' as const,
     backdropFilter: 'blur(0px)',
-    transition: { duration: 0.2 },
+    transition: { duration: 0.25 },
   },
 }
 
@@ -40,12 +40,13 @@ const contentVariants = {
     y: 0,
     transition: { duration: 0.35, staggerChildren: 0.06, delayChildren: 0.08 },
   },
-  exit: { opacity: 0, y: 16, transition: { duration: 0.2 } },
+  exit: { opacity: 0, y: 16, transition: { duration: 0.35 } },
 }
 
 const blockVariants = {
   closed: { opacity: 0, y: 12 },
   open: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 12, transition: { duration: 0.35 } },
 }
 
 export function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {
