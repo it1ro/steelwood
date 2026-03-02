@@ -10,6 +10,8 @@ export interface Subcategory {
 export interface Category {
   id: string
   title: string
+  /** Иконка категории (ключ для маппинга в UI) */
+  icon: 'kindergarten' | 'school' | 'office' | 'home' | 'dormitory'
   subcategories: Subcategory[]
 }
 
@@ -17,6 +19,7 @@ export const categories: Category[] = [
   {
     id: 'kindergartens',
     title: 'Детские сады',
+    icon: 'kindergarten',
     subcategories: [
       { id: 'kd-shkafy', title: 'Шкафы и стеллажи' },
       { id: 'kd-stoly', title: 'Столы и стулья' },
@@ -26,6 +29,7 @@ export const categories: Category[] = [
   {
     id: 'schools',
     title: 'Для школ',
+    icon: 'school',
     subcategories: [
       { id: 'sh-party', title: 'Парты и стулья' },
       { id: 'sh-shkafy', title: 'Шкафы для раздевалок' },
@@ -35,6 +39,7 @@ export const categories: Category[] = [
   {
     id: 'offices',
     title: 'Для офисов',
+    icon: 'office',
     subcategories: [
       { id: 'of-stoly', title: 'Офисные столы' },
       { id: 'of-kresla', title: 'Кресла и стулья' },
@@ -44,6 +49,7 @@ export const categories: Category[] = [
   {
     id: 'home',
     title: 'Для дома',
+    icon: 'home',
     subcategories: [
       { id: 'hm-garderob', title: 'Гардеробные и шкафы' },
       { id: 'hm-gostinaya', title: 'Гостиная' },
@@ -53,6 +59,7 @@ export const categories: Category[] = [
   {
     id: 'dormitories',
     title: 'Общежитие и лагерь',
+    icon: 'dormitory',
     subcategories: [
       { id: 'ob-krovati', title: 'Кровати двухъярусные' },
       { id: 'ob-shkafy', title: 'Шкафы и тумбы' },
