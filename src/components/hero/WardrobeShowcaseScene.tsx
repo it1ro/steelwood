@@ -72,7 +72,7 @@ export function WardrobeShowcaseScene() {
       if (isDragging.current) {
         const deltaX = e.clientX - prevPointerX.current
         prevPointerX.current = e.clientX
-        dragRotationY.current += deltaX * DRAG_SENSITIVITY
+        dragRotationY.current -= deltaX * DRAG_SENSITIVITY
       } else if (isPanning.current) {
         const deltaX = e.clientX - prevPointerX.current
         const deltaY = e.clientY - prevPointerY.current
@@ -124,7 +124,7 @@ export function WardrobeShowcaseScene() {
     const t = 1 - Math.exp(-ROTATION_SMOOTH * 60 * delta)
 
     if (groupRef.current) {
-      const targetY = progress * ROTATION_FULL_TURNS * Math.PI * 2
+      const targetY = -progress * ROTATION_FULL_TURNS * Math.PI * 2
       currentY.current += (targetY - currentY.current) * t
       groupRef.current.rotation.y =
         ROTATION_OFFSET_Y + currentY.current + dragRotationY.current
