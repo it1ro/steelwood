@@ -207,7 +207,6 @@ export function Header() {
             href={phoneHref}
             className="hidden sm:inline-flex items-center gap-1.5 text-sm text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 rounded px-1"
           >
-            <PhoneIcon />
             {phone}
           </a>
           {/* Нативное лого Max — переход в Upgoods */}
