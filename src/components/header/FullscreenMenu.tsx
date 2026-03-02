@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { useCallbackModal } from '../../contexts/CallbackModalContext'
 import { menuItems } from '../../data/menu'
 import { phone, phoneHref, maxLink, maxLabel } from '../../data/contacts'
 import { categories } from '../../data/categories'
@@ -193,6 +194,16 @@ export function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {
                     >
                       {phone}
                     </a>
+                    <button
+                      type="button"
+                      className="text-base font-medium text-neutral-900 hover:text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 rounded px-1 py-0.5 sm:text-lg md:text-xl text-left"
+                      onClick={() => {
+                        onClose()
+                        openCallbackModal()
+                      }}
+                    >
+                      Заказать звонок
+                    </button>
                     <a
                       href={maxLink}
                       target="_blank"

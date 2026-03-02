@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion'
+import { useCallbackModal } from '../../contexts/CallbackModalContext'
 import { phoneHref } from '../../data/contacts'
 import { maxLink, maxLabel } from '../../data/contacts'
 import { revealInitial, revealVisible } from './revealMotion'
 
 export function SectionCTA() {
+  const { openCallbackModal } = useCallbackModal()
   return (
     <section
       id="cta"
@@ -34,13 +36,14 @@ export function SectionCTA() {
           whileInView={revealVisible(0.15)}
           viewport={{ once: true, amount: 0.2 }}
         >
-          <a
-            href={phoneHref}
+          <button
+            type="button"
+            onClick={() => openCallbackModal()}
             className="inline-flex items-center gap-2 rounded-full bg-neutral-800 px-6 py-3 text-white transition-colors hover:bg-neutral-900"
           >
             <span aria-hidden>📞</span>
             Заказать звонок
-          </a>
+          </button>
           <a
             href={maxLink}
             target="_blank"

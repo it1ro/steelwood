@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { FullscreenMenu } from './FullscreenMenu'
 import { CatalogDropdown } from './CatalogDropdown'
-import { CallbackModal } from '../CallbackModal'
+import { useCallbackModal } from '../../contexts/CallbackModalContext'
 import { phone, phoneHref } from '../../data/contacts'
 import { maxLink, maxLabel } from '../../data/contacts'
 
@@ -64,7 +64,7 @@ const noop = () => {}
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [callbackModalOpen, setCallbackModalOpen] = useState(false)
+  const { openCallbackModal } = useCallbackModal()
   const [catalogOpen, setCatalogOpen] = useState(false)
   const catalogHoverRef = useRef(false)
   const catalogTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -210,7 +210,7 @@ export function Header() {
           <button
             ref={callbackTriggerRef}
             type="button"
-            onClick={() => setCallbackModalOpen(true)}
+            onClick={() => openCallbackModal(callbackTriggerRef)}
             className="flex h-9 items-center gap-2 rounded-lg px-2.5 text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 sm:gap-2"
             aria-label="Заказать звонок"
           >
@@ -230,12 +230,6 @@ export function Header() {
 
       {/* Полноэкранное меню по гамбургеру */}
       <FullscreenMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
-      {/* Модальное окно заказа звонка */}
-      <CallbackModal
-        isOpen={callbackModalOpen}
-        onClose={() => setCallbackModalOpen(false)}
-        triggerRef={callbackTriggerRef}
-      />
     </>
   )
 }

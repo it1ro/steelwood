@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { CallbackModalProvider } from './contexts/CallbackModalContext'
 import { Header } from './components/header/Header'
 import { Hero } from './components/hero/Hero'
 import { Footer } from './components/Footer'
@@ -14,7 +15,7 @@ function App() {
     preloadWardrobe()
   }, [])
   return (
-    <>
+    <CallbackModalProvider>
       <Header />
       <main>
         <Hero />
@@ -25,7 +26,7 @@ function App() {
         <SectionRoadmap />
       </main>
       <Footer />
-    </>
+    </CallbackModalProvider>
   )
 }
 
