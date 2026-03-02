@@ -45,6 +45,14 @@ function CartIcon() {
   )
 }
 
+function WardrobeIcon() {
+  return (
+    <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 4h14v16H5V4z M12 4v16" />
+    </svg>
+  )
+}
+
 const MAX_LOGO_URL = 'https://max.ru/s/img/big-logo.png'
 
 function MaxIcon() {
@@ -143,6 +151,7 @@ export function Header() {
               aria-haspopup="menu"
               aria-label="Категории мебели"
             >
+              <WardrobeIcon />
               Категории мебели
               <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -170,6 +179,7 @@ export function Header() {
               aria-haspopup="menu"
               aria-label="Категории мебели"
             >
+              <WardrobeIcon />
               Категории мебели
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
