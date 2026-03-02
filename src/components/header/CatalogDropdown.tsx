@@ -32,7 +32,7 @@ export function CatalogDropdown({
 
   return (
     <div
-      className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2"
+      className="absolute left-0 top-full z-50 pt-2"
       style={{ width: 'min(90vw, 32rem)', minWidth: 'min(280px, 90vw)' }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -44,7 +44,7 @@ export function CatalogDropdown({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
         transition={{ duration: 0.2 }}
-        className="w-full min-w-0 rounded-xl border border-neutral-200 bg-white/98 shadow-lg backdrop-blur-sm"
+        className="w-full min-w-0 rounded-xl border border-neutral-200 bg-white/95 shadow-lg backdrop-blur-sm"
       >
         <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] gap-0">
           {/* Список категорий слева */}
