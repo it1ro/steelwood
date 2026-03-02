@@ -140,10 +140,10 @@ export function Header() {
             <HamburgerIcon open={menuOpen} />
           </button>
 
-          {/* Логотип */}
+          {/* Логотип — скрыт на мобильном, чтобы освободить место */}
           <a
             href="/"
-            className="truncate font-semibold text-neutral-800 hover:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 rounded px-1"
+            className="hidden sm:inline-block truncate font-semibold text-neutral-800 hover:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 rounded px-1"
           >
             {LOGO}
           </a>
