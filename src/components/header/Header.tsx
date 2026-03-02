@@ -192,8 +192,9 @@ export function Header() {
           {/* Телефон — скрыт на очень маленьких экранах, виден sm+ */}
           <a
             href={phoneHref}
-            className="hidden sm:inline text-sm text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 rounded px-1"
+            className="hidden sm:inline-flex items-center gap-1.5 text-sm text-neutral-600 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 rounded px-1"
           >
+            <PhoneIcon />
             {phone}
           </a>
           {/* Нативное лого Max — переход в Upgoods */}
@@ -211,10 +212,9 @@ export function Header() {
             ref={callbackTriggerRef}
             type="button"
             onClick={() => openCallbackModal(callbackTriggerRef)}
-            className="flex h-9 items-center gap-2 rounded-lg px-2.5 text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 sm:gap-2"
+            className="flex h-9 items-center rounded-lg px-2.5 text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2"
             aria-label="Заказать звонок"
           >
-            <PhoneIcon />
             <span className="text-sm font-medium">Заказать звонок</span>
           </button>
           {/* Корзина — заглушка */}
