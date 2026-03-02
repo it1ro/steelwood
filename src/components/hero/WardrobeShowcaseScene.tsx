@@ -7,7 +7,7 @@ import { ModelErrorBoundary } from './ModelErrorBoundary'
 import { wardrobeSectionScrollProgress } from './scrollProgress'
 
 /** Начальный поворот вокруг Y (радианы): модель до скролла уже повёрнута на 90°. */
-const ROTATION_OFFSET_Y = Math.PI
+const ROTATION_OFFSET_Y = Math.PI / 2
 /** Полных оборотов за проход секции — меньше = мягче. */
 const ROTATION_FULL_TURNS = 1.25
 /** Степень сглаживания: 0 — мгновенно, 1 — не двигается. */
